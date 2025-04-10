@@ -1,26 +1,36 @@
+# nyx_core/memory.py
+
 import json
 import os
+from datetime import datetime
 
-MEMORY_PATH = "data/memory.json"
+CAMINHO_MEMORIA = os.path.join("data", "memory.json")
 
-# verifica se existe o arquivo data.json
-if not os.path.exists(MEMORY_PATH):
-    with open(MEMORY_PATH, "w") as f:
-        json.dump({"conversas": []}, f)
+# Garante que o arquivo existe
+if not os.path.exists(CAMINHO_MEMORIA):
+    with open(CAMINHO_MEMORIA, "w") as f:
+        json.dump([], f)
 
 def carregar_memoria():
-    with open(MEMORY_PATH, "r") as f:
+    if os.path.getsize(CAMINHO_MEMORIA) == 0:
+        return []
+    with open(CAMINHO_MEMORIA, "r") as f:
         return json.load(f)
 
-def salvar_memoria(dados):
-    with open(MEMORY_PATH, "w") as f:
-        json.dump(dados, f, indent=4)
-        
-def adicionar_conversa(usuario, mensagem):
-    dados = carregar_memoria()
-    dados["conversas"].append({"usuario": usuario, "mensagem": mensagem})
-    salvar_memoria(dados)
-    
-def buscar_contexto(quantidade=5):
-    dados = carregar_memoria()
-    return dados["conversas"][-quantidade:]
+def salvar_memoria(memoria):
+    with open(CAMINHO_MEMORIA, "w") as f:
+        json.dump(memoria, f, indent=2)
+
+def adicionar_conversa(autor, mensagem):
+    memoria = carregar_memoria()
+    nova_entrada = {
+        "autor": autor,
+        "mensagem": mensagem,
+        "timestamp": datetime.now().isoformat()
+    }
+    memoria.append(nova_entrada)
+    salvar_memoria(memoria)
+
+def buscar_contexto(limite=10):
+    memoria = carregar_memoria()
+    return memoria[-limite:] if len(memoria) > limite else memoria
