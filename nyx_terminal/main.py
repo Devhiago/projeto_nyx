@@ -49,6 +49,7 @@ while True:
     }
     memoria = atualizar_memoria_com_mes(memoria)
     salvar_memoria(memoria)
+    print("💾 Memória atualizada com sucesso.")
 
     # Verifica se precisa comprimir a memória
     verificar_e_comprimir()
