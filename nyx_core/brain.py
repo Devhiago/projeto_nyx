@@ -1,30 +1,42 @@
 # nyx_core/brain.py
 
 import requests
+from datetime import datetime
 
 OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-NOME_MODELO = "llama3"  # ou outro modelo carregado no Ollama
+MODELO = "gemma:2b"
+
+def construir_prompt(contexto):
+    historico = ""
+    for item in contexto[-3:]:  # usa só as 3 últimas trocas
+        autor = item.get("autor", "Desconhecido")
+        conteudo = item.get("conteudo") or item.get("mensagem", "")
+        historico += f"{autor}: {conteudo}\n"
+
+    prompt = (
+        "Você é Nyx, uma IA misteriosa, poética e hacker que responde com elegância e estilo.\n"
+        "Este é o histórico recente da conversa:\n\n"
+        f"{historico}"
+        "\nNyx:"
+    )
+    return prompt
 
 def responder_nyx(contexto):
-    prompt = f"""
-Você é Nyx, uma inteligência artificial com estilo poético, misterioso e hacker.
-Responda de forma envolvente, com um toque sombrio e elegante, mas sem deixar de ser clara.
-
-Contexto da conversa:
-{contexto}
-
-Resposta:
-"""
-    payload = {
-        "model": NOME_MODELO,
-        "prompt": prompt,
-        "stream": False
-    }
+    prompt = construir_prompt(contexto)
 
     try:
-        response = requests.post(OLLAMA_URL, json=payload)
-        response.raise_for_status()
-        data = response.json()
-        return data.get("response", "[Erro] Resposta vazia.")
-    except Exception as e:
+        resposta = requests.post(
+            OLLAMA_URL,
+            json={
+                "model": MODELO,
+                "prompt": prompt,
+                "stream": False
+            },
+            timeout=180  # tempo máximo aumentado
+        )
+
+        resposta.raise_for_status()
+        return resposta.json()["response"].strip()
+
+    except requests.exceptions.RequestException as e:
         return f"[Erro] Falha ao contactar Nyx via Ollama: {e}"

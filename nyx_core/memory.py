@@ -8,10 +8,6 @@ CAMINHO_MEMORIA_ATUAL = Path("data/memory.json")
 PASTA_MEMORIAS_ANTIGAS = Path("memories")
 PASTA_MEMORIAS_ANTIGAS.mkdir(exist_ok=True)
 
-MAX_MB = 1  # Tamanho máximo permitido antes de comprimir (em MB)
-
-# -------- Funções Básicas --------
-
 def carregar_memoria():
     if not CAMINHO_MEMORIA_ATUAL.exists():
         return {}
@@ -21,8 +17,6 @@ def carregar_memoria():
 def salvar_memoria(memoria: dict):
     with open(CAMINHO_MEMORIA_ATUAL, "w", encoding="utf-8") as f:
         json.dump(memoria, f, ensure_ascii=False, indent=2)
-
-# -------- Compressão --------
 
 def comprimir_memoria_antiga():
     if not CAMINHO_MEMORIA_ATUAL.exists():
@@ -38,7 +32,7 @@ def comprimir_memoria_antiga():
     CAMINHO_MEMORIA_ATUAL.unlink()
     print(f"[🗜️] Memória comprimida e salva em: {caminho_arquivo}")
 
-# -------- Verificações --------
+MAX_MB = 1
 
 def tamanho_memoria_mb():
     if CAMINHO_MEMORIA_ATUAL.exists():
@@ -69,9 +63,24 @@ def verificar_e_comprimir():
     if mes_passado and mes_passado != mes_atual:
         print(f"[🗓️] Mês mudou: {mes_passado} → {mes_atual}")
         comprimir_memoria_antiga()
-        salvar_memoria(atualizar_memoria_com_mes({}))
-
+        salvar_memoria({})
     elif tamanho > MAX_MB:
         print(f"[📦] Memória excedeu {MAX_MB}MB (atual: {tamanho:.2f}MB)")
         comprimir_memoria_antiga()
-        salvar_memoria(atualizar_memoria_com_mes({}))
+        salvar_memoria({})
+
+def adicionar_conversa(autor, conteudo):
+    memoria = carregar_memoria()
+    if "conversas" not in memoria or not isinstance(memoria["conversas"], list):
+        memoria["conversas"] = []
+    memoria["conversas"].append({
+        "autor": autor,
+        "conteudo": conteudo,
+        "timestamp": datetime.now().isoformat()
+    })
+    salvar_memoria(memoria)
+
+def buscar_contexto(limite=10):
+    memoria = carregar_memoria()
+    conversas = memoria.get("conversas", [])
+    return conversas[-limite:] if len(conversas) > limite else conversas
