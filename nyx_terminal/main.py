@@ -24,3 +24,28 @@ while True:
 
     print(f"🤖 Nyx: {resposta}\n")
     adicionar_conversa("Nyx", resposta)
+
+from nyx_core.memory import carregar_memoria, salvar_memoria, verificar_e_comprimir, atualizar_memoria_com_mes
+
+# Carrega memória existente
+memoria = carregar_memoria()
+
+# Aqui rola a interação com o usuário, atualiza a memória...
+# Por exemplo:
+resposta = "Alguma resposta da IA"  # ← Isso viria do modelo de linguagem
+entrada = "Usuário perguntou algo"
+
+memoria["ultima_interacao"] = {
+    "pergunta": entrada,
+    "resposta": resposta,
+    "data": str(datetime.now())
+}
+
+# Atualiza mês atual na memória
+memoria = atualizar_memoria_com_mes(memoria)
+
+# Salva memória com mês
+salvar_memoria(memoria)
+
+# Verifica se deve comprimir
+verificar_e_comprimir()
