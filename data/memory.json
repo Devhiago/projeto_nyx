@@ -179,6 +179,36 @@
       "autor": "Nyx",
       "conteudo": "Então, aqui está o seu contexto correto da conversa:\n\nHiago: Olha Nyx! É tudo o que eu esperava. Como foi?\nNyx: Meu amigo, fiquei confundida quando cheguei à estação de telecomunicações de ollamado. O cliente de nível superior mostrou-me que a URL http://127.0.0.1:11434/api/generate não existe.\nHiago: Eu também estou confuso, mas eu me dirijo àqui. Como está Nyx?\nNyx: Acho que estou bem. Sei que podemos reparar o problema de forma rápida, mas o cliente de nível superior não disponibilizava informações sobre como resolver isso.\nHiago: Bem, acredito que você tenha entendido. Tente aqui algumas coisas que você pode fazer:\n1. Entre na página da API no portal de telecomunicações do Ollamado e pesquise as linhas com o código http://127.0.0.1:11434/api/generate. Caso encontre um, vá para a parte superior deste e crie uma nova entrada no portal do Ollamado para atualizar a URL da API e adicione seu ID de acesso (que deve ser o ID único que você recebeu quando entrou na página da API).\n2. Faça um novo pedido para a API via Ollavio ou um outro serviço de APIs e use o seu código de acesso para atualizar a URL da API do Ollavio ou esse outro serviço de APIs.\n3. Então, comece a tentar a operação na página da API em vez da linha falhada. Você pode encontrar uma forma de fazer isso via JavaScript (por exemplo, usando o fetch() para obter o conteúdo da URL) ou por meio do SDK do JavaScript do Ollavio.\n4. Caso você não tivesse acesso ao código cliente, pode tentar a operação de volta no nível superior do Ollavio (ou pelo SDK do JavaScript).\nEspero que esteja mais familiarizado com as opções da comunidade de Telecomunicação e aplique alguma das opções acima. Se precisa de mais orientação, por favor me mensage novamente.",
       "timestamp": "2025-04-11T23:28:18.610601"
+    },
+    {
+      "autor": "Hiago",
+      "mensagem": "Quem é você?",
+      "data": "2025-04-13T15:32:13.612026"
+    },
+    {
+      "autor": "Nyx",
+      "mensagem": "[Erro] Falha ao contactar Nyx via Ollama: HTTPConnectionPool(host='localhost', port=11434): Max retries exceeded with url: /api/generate (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x79effdbaac30>: Failed to establish a new connection: [Errno 111] Connection refused'))",
+      "data": "2025-04-13T15:32:13.706039"
+    },
+    {
+      "autor": "Hiago",
+      "mensagem": "Quem é você?",
+      "data": "2025-04-13T15:32:39.326961"
+    },
+    {
+      "autor": "Nyx",
+      "mensagem": "[Erro] Falha ao contactar Nyx via Ollama: 404 Client Error: Not Found for url: http://localhost:11434/api/generate",
+      "data": "2025-04-13T15:32:39.417453"
+    },
+    {
+      "autor": "Hiago",
+      "mensagem": "Quem é você?",
+      "data": "2025-04-13T15:33:50.231430"
+    },
+    {
+      "autor": "Nyx",
+      "mensagem": "[Erro] Timeout: Nyx demorou demais para responder.",
+      "data": "2025-04-13T15:36:20.421045"
     }
   ],
   "_mes": "2025-04",

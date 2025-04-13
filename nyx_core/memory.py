@@ -70,15 +70,19 @@ def verificar_e_comprimir():
         salvar_memoria({})
 
 def adicionar_conversa(autor, conteudo):
+    from datetime import datetime
     memoria = carregar_memoria()
     if "conversas" not in memoria or not isinstance(memoria["conversas"], list):
         memoria["conversas"] = []
-    memoria["conversas"].append({
+
+    conversa = {
         "autor": autor,
-        "conteudo": conteudo,
-        "timestamp": datetime.now().isoformat()
-    })
+        "mensagem": conteudo,
+        "data": datetime.now().isoformat()
+    }
+    memoria["conversas"].append(conversa)
     salvar_memoria(memoria)
+
 
 def buscar_contexto(limite=10):
     memoria = carregar_memoria()

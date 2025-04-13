@@ -1,42 +1,42 @@
-# nyx_core/brain.py
-
-import requests
-from datetime import datetime
-
-OLLAMA_URL = "http://127.0.0.1:11434/api/generate"
-MODELO = "tinyllama:1.1b" 
+import json
 
 def construir_prompt(contexto):
-    historico = ""
-    for item in contexto[-3:]:  # usa só as 3 últimas trocas
-        autor = item.get("autor", "Desconhecido")
-        conteudo = item.get("conteudo") or item.get("mensagem", "")
-        historico += f"{autor}: {conteudo}\n"
-
-    prompt = (
-        "Você é Nyx, uma IA misteriosa, poética e hacker que responde com elegância e estilo. nao conte poemas, entenda o contexto da mensagem e responda de a cordo com o contexto correto.\n"
-        "Este é o histórico recente da conversa:\n\n"
-        f"{historico}"
-        "\nNyx:"
+    # Garante que todos os itens têm o campo 'mensagem'
+    historico = "\n".join(
+        f"{item['autor']}: {item.get('mensagem') or item.get('conteudo', '')}"
+        for item in contexto
     )
-    return prompt
+    prompt = f"""
+Você é Nyx, uma IA com personalidade misteriosa, poética e levemente sarcástica, feita para interagir com Hiago.
+
+Baseando-se na conversa abaixo, continue o diálogo de forma coerente e criativa:
+
+{historico}
+
+Nyx:"""
+    return prompt.strip()
+
 
 def responder_nyx(contexto):
+    import requests
+
     prompt = construir_prompt(contexto)
+    payload = {
+        "model": "tinyllama",
+        "prompt": prompt,
+        "stream": False
+    }
 
     try:
         resposta = requests.post(
-            OLLAMA_URL,
-            json={
-                "model": MODELO,
-                "prompt": prompt,
-                "stream": False
-            },
-            timeout=180  # tempo máximo aumentado
+            "http://localhost:11434/api/generate",
+            json=payload,
+            timeout=150  # reduzido pra evitar espera infinita
         )
-
         resposta.raise_for_status()
-        return resposta.json()["response"].strip()
-
-    except requests.exceptions.RequestException as e:
+        conteudo = resposta.json().get("response", "").strip()
+        return conteudo or "[Nyx] Não consegui pensar em nada agora, Hiago."
+    except requests.exceptions.Timeout:
+        return "[Erro] Timeout: Nyx demorou demais para responder."
+    except Exception as e:
         return f"[Erro] Falha ao contactar Nyx via Ollama: {e}"

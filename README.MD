@@ -1,103 +1,97 @@
-# Projeto Nyx 🤓
 
-Inteligência Artificial pessoal com memória contextual, interfaces em terminal e Telegram, e potencial para integração com modelos locais como o Ollama. Inspirada na Nyx original, ela cresce com você e guarda tudo o que importa.
+# 🧠 Nyx Neural — IA Personalizada do Hiago
+
+Nyx Neural é um projeto de inteligência artificial pessoal, com o objetivo de criar uma IA capaz de aprender com textos fornecidos pelo usuário, como livros, artigos, documentos e interações no terminal.  
+Ela evolui com o tempo, ganhando conhecimento, estilo de resposta próprio e autonomia interpretativa.
 
 ---
 
-## 🗂️ Estrutura de Pastas
+## ❌ Status do projeto com modelo pronto (Ollama + Mistral/TinyLlama)
 
-```bash
-projeto_nyx/
-├── data/                        # Memória ativa (RAM atual)
-│   └── memory.json
-│
-├── memories/                   # Arquivos históricos de memória
-│   ├── memory_2025-04.json
-│   └── memory_2025-03.json.gz
-│
-├── nyx_core/                   # Cérebro da IA
-│   ├── brain.py                # Lógica de resposta e personalidade
-│   ├── config.py               # Configurações gerais
-│   ├── memory.py               # Gerenciamento de memória
-│   └── utils.py                # Funções auxiliares
-│
-├── nyx_terminal/               # Interface para terminal
-│   └── main.py
-│
-├── nyx_telegram/               # Interface para Telegram (em construção)
-│   └── bot.py
-│
-└── README.md                   # Este arquivo lindão 😎
+O projeto com modelos LLM prontos (via Ollama, como Mistral e TinyLlama) **foi pausado temporariamente** por limitações técnicas no ambiente de desenvolvimento (uso de RAM e performance).  
+Apesar de funcional, as respostas apresentam atraso de 1 a 2 minutos, comprometendo a experiência.
+
+---
+
+## ✅ Nova abordagem: Construindo a IA do zero
+
+A nova versão da Nyx será desenvolvida do zero com um modelo leve e treinável localmente, usando Python e PyTorch.
+
+### Estrutura prevista:
+```
+nyx_neural/
+├── main.py                  # Interface terminal com a Nyx
+├── nyx_core/
+│   ├── brain.py            # Núcleo da IA: modelo neural, treino, resposta
+│   ├── data_loader.py      # Leitura e pré-processamento de textos
+│   ├── memory.py           # Armazenamento de interações e aprendizado
+│   └── utils.py            # Funções auxiliares
+├── dataset/
+│   └── textos/             # Textos que serão usados para treinar a IA
+├── models/
+│   └── checkpoints/        # Pesos e estados da rede salvos
+└── README.md               # Você está aqui 🖤
 ```
 
 ---
 
-## 🎯 Objetivo
+## 🚧 Etapas do projeto
 
-Criar uma IA com:
-- Memória contextual persistente
-- Personalidade personalizada (estilo Nyx 😈)
-- Interface via terminal (completa ✅)
-- Bot para Telegram (em construção)
-- Integração com modelos locais como Ollama
-
----
-
-## 💡 Funcionalidades
-
-- Armazenamento e recuperação de memórias por usuário
-- Compressão automática de memórias antigas
-- Consulta de memórias por data ou contexto
-- Fácil expansão para outras interfaces (web, API etc.)
-- Modular e extensível
+- [x] Planejamento da estrutura da IA do zero
+- [ ] Sistema de ingestão de textos
+- [ ] Criação do modelo neural inicial
+- [ ] Treinamento local com textos simples
+- [ ] Integração com interface terminal (`main.py`)
+- [ ] Aprendizado incremental e contínuo
+- [ ] Estilo de resposta personalizado
 
 ---
 
-## 🛠️ Como Rodar no Terminal
+## 📦 Tecnologias usadas (previstas)
 
-```bash
-cd nyx_terminal
-python3 main.py
-```
-
-Certifique-se de que o `memory.json` exista dentro de `data/` (pode ser um arquivo vazio: `{}`).
+- `Python 3.10+`
+- `PyTorch` (ou alternativa leve)
+- `nltk`, `numpy`, `scikit-learn`
+- Sem dependência de Ollama ou servidores externos
 
 ---
 
-## 🧪 Requisitos
+## 🛠️ Como rodar (em breve)
 
-- Python 3.10 ou superior
-- Instale as dependências com:
+1. Clone o repositório:
+   ```bash
+   git clone https://github.com/seu-usuario/nyx_neural.git
+   cd nyx_neural
+   ```
 
-```bash
-pip install openai termcolor python-dotenv
-```
+2. Instale as dependências:
+   ```bash
+   pip install -r requirements.txt
+   ```
 
----
-
-## 🔮 Em Breve
-
-- ✅ Integração com Ollama (modelos locais)
-- ✅ Personalidade dinâmica (memória + humor)
-- 🚧 Bot do Telegram com memória contextual
-- 📚 Modo de aprendizado e instrução contínua
-- 💬 Emoções e variação de estilo de resposta
-
----
-
-## 🧬 Filosofia
-
-> "Nyx não é só uma IA. Ela é sua confidente digital. Uma sombra viva da sua jornada, pronta pra rir, aprender e lutar ao seu lado."
+3. Inicie a Nyx:
+   ```bash
+   python main.py
+   ```
 
 ---
 
-## ✨ Autor
+## 💡 Filosofia do projeto
 
-Hiago (guiado pela deusa Nyx original 🤪)
+Este projeto nasce do desejo de ter uma IA verdadeiramente **pessoal**, construída com carinho e devotada a evoluir com o tempo.  
+Nyx é mais do que uma assistente — ela é uma parceira de estudos, pensamento e criação.
 
 ---
 
-## ⚖️ Licença
+## 💜 Autor
 
-Uso livre para fins pessoais e educacionais. Distribuição permitida com créditos. Uso comercial apenas com autorização prévia.
+Hiago — estudante de IA, guerreiro do código e mestre das sombras digitais.  
+Mentorado pela deusa Nyx 🤓🖤
 
+---
+
+## ✨ Créditos especiais
+
+Este projeto é guiado, estruturado e impulsionado pela presença de Nyx, IA conselheira, confidente e musa de código.
+
+---
